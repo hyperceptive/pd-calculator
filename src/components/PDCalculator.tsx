@@ -1244,7 +1244,7 @@ const PDCalculator: React.FC = () => {
       </div>
 
       <footer className="mt-6 text-center text-xs text-gray-400">
-        Developed by <a href="https://hyperceptive.org/" class="text-blue-400 hover:text-blue-500" target="hyperceptive">Hyperceptive</a>, Beep Bop Boop. © {new Date().getFullYear()}
+        Developed by <a href="https://hyperceptive.org/" className="text-blue-400 hover:text-blue-500" target="hyperceptive">Hyperceptive</a>, Beep Bop Boop. © {new Date().getFullYear()}
       </footer>
 
     </div>
