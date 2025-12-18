@@ -863,7 +863,7 @@ const PDCalculator: React.FC = () => {
   }, [showTimeCalcs, treatmentTime, calculatedCycles, requestedCycles, tidalCycles, pdMode]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 flex items-center justify-center flex-col">
       <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 w-full max-w-md">
         <div className="flex items-center gap-3 mb-6">
           <Calculator className="w-7 h-7 sm:w-8 sm:h-8 text-indigo-600 flex-shrink-0" />
@@ -1242,6 +1242,11 @@ const PDCalculator: React.FC = () => {
 
         <IncrementInfo mode={fillMode} />
       </div>
+
+      <footer className="mt-6 text-center text-sm text-gray-600">
+        Developed by <a href="https://hyperceptive.org/" class="text-blue-800 hover:text-blue-950" target="hyperceptive">Hyperceptive</a>, Beep Bop Boop. © {new Date().getFullYear()} All rights reserved.
+      </footer>
+
     </div>
   );
 };
