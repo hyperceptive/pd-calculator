@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Calculator, AlertCircle } from 'lucide-react';
 
-export default function PDCalculator() {
-  const [mode, setMode] = useState('low'); // 'low' or 'standard'
-  const [totalVolume, setTotalVolume] = useState('');
-  const [lastFill, setLastFill] = useState('');
-  const [fillVolume, setFillVolume] = useState('');
-  const [cycles, setCycles] = useState(null);
-  const [error, setError] = useState('');
+type FillMode = 'low' | 'standard';
 
-  const getIncrementRules = () => {
+interface IncrementRule {
+  range: [number, number];
+  increment: number;
+}
+
+interface IncrementRules {
+  fillVolume: IncrementRule[];
+  totalVolume: IncrementRule[];
+}
+
+interface ValidationResult {
+  valid: boolean;
+  message?: string;
+}
+
+export default function PDCalculator(): React.JSX.Element {
+  const [mode, setMode] = useState<FillMode>('low'); // 'low' or 'standard'
+  const [totalVolume, setTotalVolume] = useState<string>('');
+  const [lastFill, setLastFill] = useState<string>('');
+  const [fillVolume, setFillVolume] = useState<string>('');
+  const [cycles, setCycles] = useState<number | null>(null);
+  const [error, setError] = useState<string>('');
+
+  const getIncrementRules = (): IncrementRules => {
     if (mode === 'low') {
       return {
         fillVolume: [
@@ -40,7 +57,7 @@ export default function PDCalculator() {
     }
   };
 
-  const validateValue = (value, type) => {
+  const validateValue = (value: string, type: keyof IncrementRules): ValidationResult => {
     const num = parseInt(value);
     if (isNaN(num)) return { valid: false, message: 'Please enter a valid number' };
 
@@ -68,7 +85,7 @@ export default function PDCalculator() {
     };
   };
 
-  const calculateCycles = () => {
+  const calculateCycles = (): void => {
     setError('');
     setCycles(null);
 
@@ -82,13 +99,13 @@ export default function PDCalculator() {
       return;
     }
 
-    const totalValidation = validateValue(total, 'totalVolume');
+    const totalValidation = validateValue(totalVolume, 'totalVolume');
     if (!totalValidation.valid) {
       setError(`Total Volume: ${totalValidation.message}`);
       return;
     }
 
-    const fillValidation = validateValue(fill, 'fillVolume');
+    const fillValidation = validateValue(fillVolume, 'fillVolume');
     if (!fillValidation.valid) {
       setError(`Fill Volume: ${fillValidation.message}`);
       return;
@@ -111,7 +128,7 @@ export default function PDCalculator() {
     setCycles(calculatedCycles);
   };
 
-  const handleModeChange = (newMode) => {
+  const handleModeChange = (newMode: FillMode): void => {
     setMode(newMode);
     setTotalVolume('');
     setFillVolume('');
